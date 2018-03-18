@@ -1,0 +1,4 @@
+bathroom
+bedroom
+kitchen
+living
