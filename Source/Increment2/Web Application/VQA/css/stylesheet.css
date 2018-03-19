@@ -1,0 +1,131 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
+
+body{
+    background-color: lightgoldenrodyellow;
+    bottom: 0;
+    margin:0; padding:0
+}
+
+#header{
+    text-align: center;
+    background-color: #681b22;
+    color: lightgoldenrodyellow;
+}
+
+#tabs>li>a {
+    font-weight: bold;
+}
+
+#tab h3 {
+    color : black;
+    padding : 5px 15px;
+}
+
+#tab {
+    background-color: white;
+    padding-bottom: 150px;
+}
+
+#vqa{
+    padding-top: 15px;
+}
+.form-control, .thumbnail {
+    border-radius: 2px;
+}
+.btn-danger {
+    background-color: #B73333;
+}
+
+/* File Upload */
+.fake-shadow {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+}
+.fileUpload #image-id {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 33px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.img-preview {
+    max-width: 100%;
+}
+
+.hide-bullets {
+    list-style:none;
+    margin-left: -40px;
+    margin-top:20px;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+
+
+}
+
+#mainPageImage{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+    float: left;
+    width: 500px;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.vqa-inner>.item>img, .vqa-inner>.item>a>img {
+    width: 100%;
+}
+
+#pred-bounding-box{
+    margin-top: 15px;
+}
+
+#vqa-bounding-box{
+    margin-top: 15px;
+}
+
+.button-effect {
+    text-align: center;
+}
+
+.button-effect a {
+    padding: 14px 18px;
+    font-size: large;
+    color: ivory;
+    text-decoration: none;
+    border-radius: 20px;
+}
+
+#spark-btn {
+    background-color: #D90368;
+    margin-right: 40px;
+}
+
+#clarifai-btn {
+    background-color: #F28123;
+    margin-right: 40px;
+}
+
+#tf-btn {
+    background-color: #541388;
+}
+
+#classificationImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vqa-effect{
+    margin: 15px;
+}
