@@ -117,7 +117,42 @@ $(document).ready(function() {
 		var val = JSON.stringify(res.outputs[0].data.concepts[n].value, null, 2)
 		return val;
     }
-	
+
+	function arrayContains(response, arrhaystack)
+{
+var count=0;
+var i=0;
+for(i=0; i<5; i++){
+console.log(i+":"+getClarifaiName(response, i));
+if (arrhaystack.indexOf( getClarifaiName(response, i)) > -1){
+
+    count=count+1;
+}
+
+}
+    return count;
+}
+
+
+function indexOfMax(arr) {
+    if (arr.length === 0) {
+        return -1;
+    }
+
+    var max = arr[0];
+    var maxIndex = 0;
+
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            maxIndex = i;
+            max = arr[i];
+        }
+    }
+
+    return maxIndex;
+}
+
+
     //pred clarifai-api click
     $(document).on('click', '#clarifai-btn', function(e){
 		
@@ -126,13 +161,24 @@ $(document).ready(function() {
 		var tmp_img = document.createElement("img");
 		tmp_img.src = pred_img_src; 
 		var base64img = getBase64Image(tmp_img);
-
+    var kitchen=['stove','room','oven','microwave'];
+    var bedroom=['bed','furniture','bedroom','chair'];
+    var livingroom=['sofa','room','livingroom','chair'];
+    var washroom=['bathroom','mirror','room','battub','toilet','basin'];
 		// predict the contents of an image by passing in a url
 		app.models.predict(Clarifai.GENERAL_MODEL, {base64: base64img}).then(
-		function(response) {			
-			var pred = getClarifaiName(response, 0) + ": " + getClarifaiValue(response, 0) + ", " 
-						+ getClarifaiName(response, 1) + ": " + getClarifaiValue(response, 1) + ", " 
-						+ getClarifaiName(response, 2) + ": " + getClarifaiValue(response, 2); 
+		function(response) {
+		var k=arrayContains(response,kitchen);
+		var b=arrayContains(response,bedroom);
+		var l=arrayContains(response,livingroom);
+		var w=arrayContains(response,washroom);
+		var arr1=[k,b,l,w];
+		var ans=['kitchen','bedroom','livingroom','washroom'];
+		var i = indexOfMax(arr1);
+			//var pred = getClarifaiName(response, 0) + ": " + getClarifaiValue(response, 0) + ", "
+			//			+ getClarifaiName(response, 1) + ": " + getClarifaiValue(response, 1) + ", "
+			//			+ getClarifaiName(response, 2) + ": " + getClarifaiValue(response, 2) +" ans: "+k+","+b+","+l+","+w+","+ans[i];
+var pred="ans:"+ans[i];
 			$('#pred_result').text(pred);
 			$('#pred_result').show();
 		},
