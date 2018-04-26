@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta charset="UTF-8">
+    <title>Visual Question Answering</title>
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-latest.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+
+<body>
+<div class="container" id="header">
+    <h2>Visual Question Answering</h2>
+    <h4>Project by Team 1</h4>
+</div>
+
+<div id="tab" class="container">
+    <ul class="nav nav-tabs" id="tabs">
+        <li class="active">
+            <a  href="#1" data-toggle="tab">Overview</a>
+        </li>
+        <li><a href="#2" data-toggle="tab">Image Prediction</a>
+        </li>
+        <li><a href="#3" data-toggle="tab">Image Classification</a>
+        </li>
+        <li><a href="#4" data-toggle="tab">VQA</a>
+        </li>
+        <li><a href="#5" data-toggle="tab">Contact</a>
+        </li>
+    </ul>
+
+    <div class="tab-content ">
+        <div class="tab-pane active" id="1">
+            <img id="mainPageImage" src="{{ url_for('static', filename='images/mainPage.jpg') }}">
+            <br>
+            <p>Visual question answering (VQA) is a new and exciting problem that combines natural language processing and computer vision techniques. VQA enables the user to either select an image from the available images or upload an image. The user can then ask a question about the selected image. The main purpose of this application is to provide an accurate natural language answer in real-time. This is based on show and tell model.</p>
+            <br>
+            <p>This application is a part of Big Data Analytics course project. Along with VQA, this application provides option for Image Prediction and Image Classification. Image Prediction is performed using three models viz. Spark API, Clarifai API and TensorFlow Inception model. Image Classification is performed using various machine learning and deep learning models such as Random Forest, Naive Bayes, Decision Tree, Softmax and CNN.</p>
+            <br>
+            <p>The dataset used to build this application is compiled from MS COCO dataset. The images are from home interiors domain. Each image is associated with multiple  questions about the image. Each question in turn has multiple answers. The question-answer set is stored as a JSON file.</p>
+            <br><br>
+            Reference: <a href="http://visualqa.csail.mit.edu/" target="_blank">VQA by MIT</a>
+        </div>
+        <div class="tab-pane" id="2">
+            <div id="imagePrediction">
+                <br>
+                <p>This demo could predict the category of the selected image.
+                    Click on one image below and select the API you would want to use.</p>
+
+                <div id="pred_area">
+                    <!-- Slider -->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- Bottom switcher of slider -->
+                            <ul class="hide-bullets">
+
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="pred-selector-2" href="#"><img class="tbp" src="{{ url_for('static', filename='images/COCO_val2014_000000010114.jpg') }}"></a>
+                                </li>
+
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="pred-selector-1" href="#"><img class="tbp" src="{{ url_for('static', filename='images/COCO_val2014_000000219578.jpg') }}"></a>
+                                </li>
+
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="pred-selector-3" href="#"><img class="tbp" src="{{ url_for('static', filename='images/COCO_val2014_000000199358.jpg') }}"></a>
+                                </li>
+
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="pred-selector-4" href="#"><img class="tbp" src="{{ url_for('static', filename='images/COCO_val2014_000000000939.jpg') }}"></a>
+                                </li>
+
+                            </ul>
+
+                            <div class="button-effect">
+                                <p style="visibility: hidden">invisible</p>
+                                <p style="visibility: hidden">invisible2</p>
+                                <a id="spark-btn" href="#" title="Spark API">Spark API</a>
+                                <a id="clarifai-btn" href="#" title="Clarifai API">Clarifai API</a>
+                                <a id="tf-btn" href="#" title="TensorFlow">TensorFlow</a>
+                            </div>
+							
+                            <div class="pred-effect">
+                                <p style="visibility: hidden">invisible</p>
+                                <p style="visibility: hidden">invisible2</p>
+								<img id="processing" src="{{ url_for('static', filename='images/processing.gif') }}" alt="O" style="display:none">
+                                <h3 id="pred_result" style="display:none"> </h3>
+                            </div>
+                        </div>
+						<div class="col-sm-6">
+                            <div class="col-xs-12" id="slider2">
+                                <!-- Top part of the slider -->
+                                <div class="row">
+                                    <div class="col-sm-12" id="pred-bounding-box">
+                                        <div class="pred slide" id="myCarousel2">
+                                            <!-- vqa items -->
+                                            <div class="pred-inner">
+												<img class="img-preview" id="pred_img" src="{{ url_for('static', filename='images/COCO_val2014_000000010114.jpg') }}">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+					
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="3">
+            <div id="classification">
+                <br>
+                <p>This demo compares the accuracy of various Image classification techniques.</p>
+                <img src="{{ url_for('static', filename='images/classificationAccuracy.png') }}" id="classificationImage">
+            </div>
+        </div>
+        <div class="tab-pane" id="4">
+            <div id="vqa">
+                <p>This demo could answer questions relevant to the selected image.
+                    Click on one image below or
+                    <a href="javascript:void(0)" onclick="$('#image-id').click()">upload</a>
+                    your own.
+                    Then type question you would like to ask about this image.</p>
+                <input type="file" id="image-id" name="choose-image" style="display: none;" class="form-control">
+
+                <div id="main_area">
+                    <!-- Slider -->
+                    <div class="row">
+                        <div class="col-sm-6" id="slider-thumbs">
+                            <!-- Bottom switcher of slider -->
+                            <ul class="hide-bullets">
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="vqa-selector-0" href="#"><img class="tb" src="{{ url_for('static', filename='images/COCO_val2014_000000219578.jpg') }}" >
+                                    </a>
+                                </li>
+
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="vqa-selector-1" href="#"><img  class="tb" src="{{ url_for('static', filename='images/COCO_val2014_000000006861.jpg') }}"></a>
+                                </li>
+
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="vqa-selector-2" href="#"><img  class="tb" src="{{ url_for('static', filename='images/COCO_val2014_000000000939.jpg') }}"></a>
+                                </li>
+
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="vqa-selector-3" href="#"><img  class="tb" src="{{ url_for('static', filename='images/COCO_val2014_000000010114.jpg') }}"></a>
+                                </li>
+
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="vqa-selector-4" href="#"><img  class="tb" src="{{ url_for('static', filename='images/COCO_val2014_000000199358.jpg') }}"></a>
+                                </li>
+
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="vqa-selector-5" href="#"><img  class="tb" src="{{ url_for('static', filename='images/COCO_val2014_000000303867.jpg') }}"></a>
+                                </li>
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="vqa-selector-6" href="#"><img  class="tb" src="{{ url_for('static', filename='images/COCO_val2014_000000425266.jpg') }}"></a>
+                                </li>
+
+                                <li class="col-sm-3">
+                                    <a class="thumbnail img-responsive" id="vqa-selector-7" href="#"><img  class="tb" src="{{ url_for('static', filename='images/COCO_val2014_000000444390.jpg') }}"></a>
+                                </li>
+                            </ul>
+
+                            <div class="vqa-effect">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="vqaQuestion">Question:</label>
+                                        <input type="text" class="form-control" id="vqaQuestion">
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="col-xs-12" id="slider">
+                                <!-- Top part of the slider -->
+                                <div class="row">
+                                    <div class="col-sm-12" id="vqa-bounding-box">
+                                        <div class="vqa slide" id="myCarousel">
+                                            <!-- vqa items -->
+                                            <div class="vqa-inner">
+												<img id="vqa_image" class="img-preview" src="{{ url_for('static', filename='images/COCO_val2014_000000219578.jpg') }}">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/Slider-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="5">
+            <h3>Avni Mehta</h3>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+
+</body>
+
+</html>
